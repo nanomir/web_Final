@@ -1,0 +1,93 @@
+DROP TABLE IF EXISTS room_type;
+CREATE TABLE room_type (
+     room_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
+         room_type_name VARCHAR(30)
+);
+INSERT INTO room_type VALUES(1,'Одноквартирная');
+INSERT INTO room_type VALUES(2,'Студия');
+INSERT INTO room_type VALUES(3,'Двухквартирная');
+INSERT INTO room_type VALUES(4,'Трёхквартирная');
+
+DROP TABLE IF EXISTS style;
+CREATE TABLE style (
+     style_id INTEGER PRIMARY KEY AUTOINCREMENT,
+         style_name VARCHAR(30)
+);
+INSERT INTO style VALUES(1,'Классический');
+INSERT INTO style VALUES(2,'Модерн');
+INSERT INTO style VALUES(3,'Винтаж');
+INSERT INTO style VALUES(4,'Ретро');
+
+DROP TABLE IF EXISTS company;
+CREATE TABLE company (
+       company_id INTEGER PRIMARY KEY AUTOINCREMENT,
+           company_name VARCHAR(40)
+);
+INSERT INTO company VALUES(1,'Компания А');
+INSERT INTO company VALUES(2,'Компания Б');
+INSERT INTO company VALUES(3,'Компания В');
+
+DROP TABLE IF EXISTS client;
+CREATE TABLE client (
+       client_id INTEGER PRIMARY KEY AUTOINCREMENT,
+           client_name VARCHAR(30)
+);
+INSERT INTO client VALUES(1,'Усова А. М.');
+INSERT INTO client VALUES(2,'Шмелева А. Ф.');
+INSERT INTO client VALUES(3,'Ткачев Д. А.');
+INSERT INTO client VALUES(4,'Никитин Д. Г.');
+
+DROP TABLE IF EXISTS room;
+CREATE TABLE room (
+      room_id INTEGER PRIMARY KEY AUTOINCREMENT,
+          title VARCHAR(80),
+      style_id int,
+      company_id INT,
+      price INT,
+      available_amount INT,
+      FOREIGN KEY  (style_id)  REFERENCES style  (style_id) ON DELETE CASCADE,
+      FOREIGN KEY (company_id)  REFERENCES company (company_id) ON DELETE CASCADE
+);
+INSERT INTO room VALUES(1,'Пушкина 17',1,2,1000,1);
+INSERT INTO room VALUES(2,'Хлопушкина 22',2,1,5000,0);
+INSERT INTO room VALUES(3,'Пистолетова 5',3,2,3500,2);
+INSERT INTO room VALUES(4,'Рычажникова 8',3,1,2000,1);
+INSERT INTO room VALUES(5,'Пулемётова 9',4,3,2000,2);
+INSERT INTO room VALUES(6,'Ракетникова 12',4,3,4000,2);
+INSERT INTO room VALUES(7,'Винтовая 5',4,3,1000,0);
+INSERT INTO room VALUES(8,'Гранатовая 2',3,2,2500,1);
+
+
+DROP TABLE IF EXISTS room_room_type;
+CREATE TABLE room_room_type (
+      room_room_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      room_id INT,
+     room_type_id INT,
+      FOREIGN KEY (room_id)  REFERENCES room (room_id) ON DELETE CASCADE,
+      FOREIGN KEY  (room_type_id)  REFERENCES room_type  (room_type_id) ON DELETE CASCADE
+);
+INSERT INTO room_room_type VALUES(1,1,1);
+INSERT INTO room_room_type VALUES(2,2,2);
+INSERT INTO room_room_type VALUES(3,3,3);
+INSERT INTO room_room_type VALUES(4,4,4);
+INSERT INTO room_room_type VALUES(5,5,1);
+INSERT INTO room_room_type VALUES(6,6,2);
+INSERT INTO room_room_type VALUES(7,7,3);
+INSERT INTO room_room_type VALUES(8,8,4);
+
+DROP TABLE IF EXISTS room_client;
+CREATE TABLE room_client (
+      room_client_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      room_id int,
+      client_id INT,
+          enter_date DATE,
+          exit_date DATE,
+      FOREIGN KEY (room_id)  REFERENCES room (room_id) ON DELETE CASCADE,
+      FOREIGN KEY (client_id)  REFERENCES client (client_id) ON DELETE CASCADE
+);
+INSERT INTO room_client VALUES(1,2,1,'2020-09-11','2020-09-24');
+INSERT INTO room_client VALUES(2,4,2,'2020-09-11','2023-06-08');
+INSERT INTO room_client VALUES(3,5,3,'2020-09-17','2020-10-10');
+INSERT INTO room_client VALUES(4,7,4,'2020-09-18',NULL);
+
+DELETE FROM sqlite_sequence;

@@ -1,0 +1,121 @@
+.menu {
+    background-color: #626262;
+    box-shadow: 4px 5px 10px rgba(0, 0, 0, 0.4);
+    width: 100%;
+}
+.menu li {
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+    color: #6f6d6d;
+}
+.menu a {
+    text-decoration: none;
+    color: #6f6d6d;
+}
+.menu li:hover {
+    background-color: #fed053;
+    cursor: pointer;
+    color: #f8f8f8;
+}
+.menu ul {
+    padding: 0px;
+}
+.active{
+    background-color: #fed053;
+    color: #f8f8f8;
+}
+.active a:visited{
+    color: #3a4501;
+}
+.menu a:hover{
+    color: #2f0ac3;
+}
+.block {
+    padding: 10px 20px;
+    color:  #2a2e34;
+}
+
+div.table{
+    display: inline-block;
+}
+
+div.table table{
+    border-spacing: 0;
+}
+
+div.table table th, td{
+    border: thin rgb(172, 172, 172) solid;
+    padding: 5px;
+}
+
+div.table table thead tr, tbody tr:nth-child(2n){
+    background-color: lightgray;
+}
+
+                
+.room_container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.room_card{
+    position: relative;
+    width: 42%;
+    margin: 2%;
+    padding: 5px 10px 20px 10px;
+    background-color: #fed053;
+    box-shadow: 4px 5px 10px rgba(0, 0, 0, 0.4);
+    border-radius: 5%;
+    color: #000000;
+    border: #2a2e34 thin solid;
+}
+
+.room_card button[name=borrow_room]{
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+}
+
+.room_card li{
+    list-style-type: none;
+}
+
+body{
+    min-width: 500px;
+}
+.filter_menu{
+    float: left;
+    width: max-content;
+    margin: 5px;
+    background-color: #fed053;
+    border: #2a2e34 thin solid;
+    border-radius: 10%;
+    padding: 5px 10px 5px 10px;
+    color: #000000;
+}
+.filter_menu input{
+    margin: 5px;
+    margin-top: 15px;
+}
+
+.filter_menu p, p :nth-child(n){
+    padding: 0;
+    margin: 5px;
+}
+
+.filter_menu details{
+    padding: 10px;
+}
+
+@media (max-width: 750px) {
+    .filter_menu{
+        margin: 5px auto;
+        width: 80%;
+    }
+
+    .room_card{
+        width: 80%;
+    }
+}

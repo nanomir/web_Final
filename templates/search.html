@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+        <title> Карточка клиента </title>
+        
+        {% macro render_room_card(room) %}
+
+            <form method="get" class="room_container">
+                {% for i in range(len(room)) %}
+                    <ul class="room_card">
+                        {% for name in room.dtypes.index %}
+                        <li>{{name}}: <b>{{room.loc[i, name]}}</b></li>
+                        {% endfor %}
+                        {% if room.loc[i, "Доступно"] == 0 %}
+                            <button disabled type="submit" name="borrow_room" value={{room.loc[i, "room_id"]}}>Выбрать</button>
+                        {% else %}
+                            <button type="submit" name="borrow_room" value={{room.loc[i, "room_id"]}}>Выбрать</button>
+                        {% endif %}
+                    </ul>
+                {% endfor %}
+            </form method="get">
+        {% endmacro %}
+        
+    </head>
+    <body>
+        <div class="menu">
+            <ul>
+                <li class ="active"><a href={{ url_for("index")}}>Поиск квартиры</a></li>
+            </ul>
+        </div>
+        
+        <form action="{{url_for("search")}}" class="filter_menu">
+            {% if len(chosen_style) != 0 %}
+                <details open>
+            {% else %}
+                <details>
+            {% endif %}
+                <summary><b>Стиль_квартиры</b></summary>
+                {% for i in range(len(style)) %}
+                <p>
+                    {% if style.loc[i, "style_name"] in chosen_style %}
+                        <label><input checked type="checkbox" name="{{style.loc[i, "style_name"]}}" value="{{style.loc[i, "style_id"]}}">{{style.loc[i, "style_name"]}} ({{style.loc[i, "count"]}})</label>
+                    {% else %}
+                        <label><input type="checkbox" name="{{style.loc[i, "style_name"]}}" value="{{style.loc[i, "style_id"]}}">{{style.loc[i, "style_name"]}} ({{style.loc[i, "count"]}})</label>
+                    {% endif %}
+                </p>
+                {% endfor %}
+            </details>
+            {% if len(chosen_room_type) != 0 %}
+                <details open>
+            {% else %}
+                <details>
+            {% endif %}
+                <summary><b>Тип_квартиры</b></summary>
+                {% for i in range(len(room_type)) %}
+                    <p>
+                        {% if room_type.loc[i, "room_type_name"] in chosen_room_type %}
+                            <label><input checked type="checkbox" name="{{room_type.loc[i, "room_type_name"]}}" value="{{room_type.loc[i, "room_type_id"]}}">{{room_type.loc[i, "room_type_name"]}}  ({{room_type.loc[i, "count"]}})</label>
+                        {% else %}
+                            <label><input type="checkbox" name="{{room_type.loc[i, "room_type_name"]}}" value="{{room_type.loc[i, "room_type_id"]}}">{{room_type.loc[i, "room_type_name"]}}  ({{room_type.loc[i, "count"]}})</label>
+                        {% endif %}
+                    </p>
+                {% endfor %}
+            </details>
+            {% if len(chosen_company) != 0 %}
+                <details open>
+            {% else %}
+                <details>
+            {% endif %}
+                <summary><b>Компания</b></summary>
+                {% for i in range(len(company)) %}
+                    <p>
+                        {% if company.loc[i, "company_name"] in chosen_company %}
+                            <label><input checked type="checkbox" name="{{company.loc[i, "company_name"]}}" value="{{company.loc[i, "company_id"]}}">{{company.loc[i, "company_name"]}}  ({{company.loc[i, "count"]}})</label>
+                        {% else %}
+                            <label><input type="checkbox" name="{{company.loc[i, "company_name"]}}" value="{{company.loc[i, "company_id"]}}">{{company.loc[i, "company_name"]}}  ({{company.loc[i, "count"]}})</label>
+                        {% endif %}
+                    </p>
+                {% endfor %}
+            </details>
+            <input type="submit" name="search" value="Найти">
+            <input type="submit" name="clear_filter" value="Очистить">
+        </form>
+
+        <div class="block">
+            <form action="{{url_for("index")}}" method="get">
+                <input type="submit" value="Не выбирать квартиру">
+            </form>
+            <p>
+                <font style="red">
+                    {% if len(chosen_style) != 0 %}
+                        Стиль_квартиры: 
+                        {% for item in chosen_style%}
+                            {{item}},
+                        {% endfor %}
+                    {% endif %}
+                    {% if len(chosen_room_type) != 0 %}
+                        Тип_квартиры: 
+                        {% for item in chosen_room_type%}
+                            {{item}},
+                        {% endfor %}
+                    {% endif %}
+                    {% if len(chosen_company) != 0 %}
+                        Компания: 
+                        {% for item in chosen_company%}
+                            {{item}},
+                        {% endfor %}
+                    {% endif %}
+                </font>
+            </p>
+            {{render_room_card(room)}}
+        </div>
+    </body>
+</html>
